@@ -1,0 +1,198 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Pure dark monochrome design - permanent */
+    --background: 0 0% 2%;          /* #050505 - Deep black */
+    --foreground: 40 12% 98%;       /* #fcfbf9 - Warm white */
+
+    --card: 0 0% 5%;                /* #0d0d0d - Sleek very dark gray */
+    --card-foreground: 40 12% 98%;
+
+    --popover: 0 0% 4%;             /* #0a0a0a */
+    --popover-foreground: 40 12% 98%;
+
+    --primary: 0 0% 100%;           /* #ffffff - Pure white */
+    --primary-foreground: 0 0% 0%;  /* #000000 - Jet black */
+
+    --secondary: 0 0% 8%;           /* #141414 */
+    --secondary-foreground: 40 12% 98%;
+
+    --muted: 0 0% 10%;              /* #1a1a1a */
+    --muted-foreground: 0 0% 64%;   /* #a3a3a3 - Soft mid-gray */
+
+    --accent: 0 0% 12%;             /* #1f1f1f */
+    --accent-foreground: 40 12% 98%;
+
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 15%;             /* #262626 - Fine hairline dark border */
+    --input: 0 0% 12%;              /* #1f1f1f */
+    --ring: 0 0% 50%;               /* #808080 */
+
+    --radius: 0px;                  /* Sharp editorial look */
+
+    --font-display: 'Cinzel', serif;
+    --font-sans: 'Inter', sans-serif;
+  }
+
+  .dark {
+    /* Keep exact same dark tokens to avoid any shifting if .dark is toggled */
+    --background: 0 0% 2%;
+    --foreground: 40 12% 98%;
+    --card: 0 0% 5%;
+    --card-foreground: 40 12% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 40 12% 98%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 40 12% 98%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 64%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 40 12% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 50%;
+    --radius: 0px;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border selection:bg-white selection:text-black;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Custom Cinematic & Musical Styles */
+
+/* 1. Fixed Grain Texture (Performance-safe pointer-events-none overlay) */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3联%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Corrected SVG for noise filter (escaped '#' as '%23') */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* 2. Staff Line Animation */
+@keyframes drawStaff {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.staff-lines-container {
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.animated-staff-line {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 0.75;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawStaff 20s linear infinite;
+}
+
+.animated-staff-line-delayed {
+  stroke: rgba(255, 255, 255, 0.03);
+  stroke-width: 0.5;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawStaff 35s linear infinite;
+  animation-delay: -10s;
+}
+
+/* 3. Subtle floating notes */
+@keyframes floatNote {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.15;
+  }
+  90% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateY(-80px) rotate(15deg);
+    opacity: 0;
+  }
+}
+
+.floating-note {
+  position: absolute;
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 1.5rem;
+  animation: floatNote 12s ease-in-out infinite;
+}
+
+/* 4. Elegant custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+/* 5. Audio Waveform visualizer bars */
+@keyframes waveformBar {
+  0%, 100% {
+    transform: scaleY(0.2);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.waveform-bar {
+  animation: waveformBar 1.2s ease-in-out infinite;
+  transform-origin: bottom;
+}
